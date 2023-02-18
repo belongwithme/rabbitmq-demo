@@ -1,6 +1,7 @@
 package com.wang.rabbitmq.one;
 
 import com.rabbitmq.client.*;
+import com.wang.rabbitmq.util.RabbitMqUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -15,13 +16,8 @@ public class Consumer {
     //接受消息
     public static void main(String[] args) throws IOException, TimeoutException {
         //创建连接工厂
-        ConnectionFactory factory =new ConnectionFactory();
-        factory.setHost("localhost");
-        factory.setUsername("admin");
-        factory.setPassword("123");
-        Connection connection =factory.newConnection();
-
-        Channel channel1 =connection.createChannel();
+        RabbitMqUtils util =new RabbitMqUtils();
+        Channel channel1 =util.getChannel();
 
         //声明 接受消息
         DeliverCallback deliverCallback=(consumerTag,message)->{
@@ -38,7 +34,7 @@ public class Consumer {
          * 3.消费者未成功消费的回调
          * 4.消费者取录消费的回调
          */
-
+        System.out.println("C1等待接收消息....");
         channel1.basicConsume(QUEUE_NAME,true,deliverCallback,cancelCallback);
     }
 }
