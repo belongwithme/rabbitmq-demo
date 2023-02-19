@@ -28,7 +28,8 @@ public class Work04 {
             channel.basicAck(message.getEnvelope().getDeliveryTag(),false);
         };
         //设置不公平分发
-        int prefetchCount =1;
+        //int prefetchCount =1;
+        int prefetchCount =5;
         channel.basicQos(prefetchCount);
         //采用手动应答
         boolean autoAck =false;
