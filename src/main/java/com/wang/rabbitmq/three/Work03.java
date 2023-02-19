@@ -30,6 +30,9 @@ public class Work03 {
              */
             channel.basicAck(message.getEnvelope().getDeliveryTag(),false);
         };
+        //设置不公平分发
+        int prefetchCount =1;
+        channel.basicQos(prefetchCount);
         //采用手动应答
         boolean autoAck =false;
         channel.basicConsume(TASK_QUEUE_NAME,autoAck,deliverCallback,(consumerTag->{
