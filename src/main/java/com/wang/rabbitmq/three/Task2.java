@@ -17,6 +17,8 @@ public class Task2 {
 
     public static void main(String[] args) throws IOException, TimeoutException {
         Channel channel= RabbitMqUtils.getChannel();
+        //队列持久化
+        boolean durable =true; //需要让Queue进行持久化
         //声明队列
         channel.queueDeclare(TASK_QUEUE_NAME,false,false,false,null);
         //从控制台中输入信息
