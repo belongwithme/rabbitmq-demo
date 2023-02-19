@@ -1,6 +1,7 @@
 package com.wang.rabbitmq.three;
 
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.MessageProperties;
 import com.wang.rabbitmq.util.RabbitMqUtils;
 
 import java.io.IOException;
@@ -25,7 +26,8 @@ public class Task2 {
         Scanner scanner=new Scanner(System.in);
         while(scanner.hasNext()){
             String message=scanner.next();
-            channel.basicPublish("",TASK_QUEUE_NAME,null,message.getBytes("UTF-8"));
+            //消息持久化  MessageProperties.PERSISTENT_TEXT_PLAIN
+            channel.basicPublish("",TASK_QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN,message.getBytes("UTF-8"));
             System.out.println("生产者发出消息:"+message);
         }
     }
