@@ -53,9 +53,18 @@ public class Consumer01 {
 
         System.out.println("等待接收消息");
         DeliverCallback deliverCallback=(consumerTag,message)->{
-            System.out.println("Consumer01接收的消息是："+new String(message.getBody(),"UTF-8"));
+           String msg = new String(message.getBody());
+
+           if(msg.equals("info5")){
+               System.out.println("Consumer01接收的消息是:"+msg+":此消息是被C1拒绝的");
+               channel.basicReject(message.getEnvelope().getDeliveryTag(),false);
+           }else{
+               System.out.println("Consumer01接收的消息是:"+msg);
+               channel.basicAck(message.getEnvelope().getDeliveryTag(),false);
+           }
         };
-        channel.basicConsume(NORMAL_QUEUE,true,deliverCallback,consumerTag->{});
+        //开启手动应答。
+        channel.basicConsume(NORMAL_QUEUE,false,deliverCallback,consumerTag->{});
 
 
     }
