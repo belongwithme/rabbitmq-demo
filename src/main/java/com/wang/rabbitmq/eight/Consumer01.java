@@ -35,10 +35,13 @@ public class Consumer01 {
         Map<String, Object> arguments =new HashMap<>();
         //正常队列设置死信交换机
         arguments.put("x-dead-letter-exchange",DEAD_EXCHANGE);
-        //设置过期时间
-        arguments.put("x-message-ttl",100000);
+//        //设置过期时间
+//        arguments.put("x-message-ttl",100000);
         //设置死信RoutingKey
         arguments.put("x-dead-letter-routing-key","lisi");
+        //设置正常队列长度的限制
+        arguments.put("x-max-length",6);
+
         channel.queueDeclare(NORMAL_QUEUE,false,false,false,arguments);
         //声明死信队列
         channel.queueDeclare(DEAD_QUEUE,false,false,false,null);
